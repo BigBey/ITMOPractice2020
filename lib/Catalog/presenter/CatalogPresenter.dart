@@ -68,6 +68,12 @@ class CatalogPresenter {
     );
   }
 
+  void goToDayTimetable(BuildContext context){
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => _mainPresenter.daysOfTheWeekPresenter.daysOfTheWeekView),
+    );
+  }
+
   void goBack(BuildContext context) {
     Navigator.pop(context);
   }

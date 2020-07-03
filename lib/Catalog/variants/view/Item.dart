@@ -50,7 +50,7 @@ class ItemState extends State<Item> with SingleTickerProviderStateMixin {
     return Center(
         child: GestureDetector(
             onTap: () {
-              _catalogPresenter.goToTest(context);
+              _catalogPresenter.goToDayTimetable(context);
             },
             child: Container(
                 height: 100,
