@@ -7,7 +7,6 @@ import 'package:flutterapp/assets/ege_helper_icons.dart';
 class DayTimetableView extends StatefulWidget {
   var _dayTimetablePresenter;
 
-
   DayTimetableView(DayTimetablePresenter dayTimetablePresenter) {
     _dayTimetablePresenter = dayTimetablePresenter;
   }
@@ -15,7 +14,6 @@ class DayTimetableView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() =>
       DayTimetableViewState(_dayTimetablePresenter);
-
 }
 
 class DayTimetableViewState extends State<DayTimetableView> {
@@ -27,7 +25,6 @@ class DayTimetableViewState extends State<DayTimetableView> {
   TextEditingController _textBookRef;
   TextEditingController _description;
   TextEditingController _homework;
-
 
   DayTimetableViewState(DayTimetablePresenter dayTimetablePresenter) {
     _dayTimetablePresenter = dayTimetablePresenter;
@@ -61,44 +58,51 @@ class DayTimetableViewState extends State<DayTimetableView> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-          children: <Widget>[
-            new Expanded(child: Row(
-              children: <Widget>[
-                Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(
-                        EgeHelper.plus,
-                        color: _dayTimetablePresenter.mainPresenter.mainPresenterModel.themeColorEnd,
-                      ),
-                      onPressed: () {
-                        _showMyDialog();
-                      },
-                    )
-                )
-              ],
-            ),
-            flex: 1,),
-            new Expanded(child: ListView.builder(
+      children: <Widget>[
+        new Expanded(
+          child: Row(
+            children: <Widget>[
+              Container(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(
+                      EgeHelper.plus,
+                      color: _dayTimetablePresenter
+                          .mainPresenter.mainPresenterModel.themeColorEnd,
+                    ),
+                    onPressed: () {
+                      _showMyDialog();
+                    },
+                  ))
+            ],
+          ),
+          flex: 1,
+        ),
+        new Expanded(
+          child: ListView.builder(
               itemCount: subjects.length,
-                itemBuilder: (_, index){
-                   return Card(
-                     child: Column(
-                       children: <Widget>[
-                         Text(subjects[index].title),
-                         Text(subjects[index].teacherName),
-                         Text(subjects[index].textBook),
-                         Text(subjects[index].textBookRef),
-                         Text(subjects[index].description),
-                         Text(subjects[index].homework),
-                       ],
-                     ),
-                   );
-                }),
-              flex: 9,)
-          ],
+              itemBuilder: (_, index) {
+                return GestureDetector(
+                    onTap: () {
+                      _dayTimetablePresenter.goToVisits(context);
+                    },
+                    child: Card(
+                      child: Column(
+                        children: <Widget>[
+                          Text(subjects[index].title),
+                          Text(subjects[index].teacherName),
+                          Text(subjects[index].textBook),
+                          Text(subjects[index].textBookRef),
+                          Text(subjects[index].description),
+                          Text(subjects[index].homework),
+                        ],
+                      ),
+                    ));
+              }),
+          flex: 9,
         )
-    );
+      ],
+    ));
   }
 
   Future<void> _showMyDialog() async {
@@ -176,18 +180,15 @@ class DayTimetableViewState extends State<DayTimetableView> {
     );
   }
 
-  void _addItem(){
+  void _addItem() {
     setState(() {
-      subjects.add(
-          Subject(
-              _titleController.text,
-              _teacherName.text,
-              _textBook.text,
-              _textBookRef.text,
-              _description.text,
-              _homework.text)
-      );
+      subjects.add(Subject(
+          _titleController.text,
+          _teacherName.text,
+          _textBook.text,
+          _textBookRef.text,
+          _description.text,
+          _homework.text));
     });
   }
-
 }

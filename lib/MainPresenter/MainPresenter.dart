@@ -8,6 +8,7 @@ import 'package:flutterapp/Statistics/presenter/StatisticsPresenter.dart';
 import 'package:flutterapp/Statistics/view/StatisticsView.dart';
 import 'package:flutterapp/Test/presenter/TestPresenter.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
+import 'package:flutterapp/Visits/presenter/VisitsPresenter.dart';
 import 'package:flutterapp/days_of_week/presenter/DaysOfTheWeekPresenter.dart';
 
 import 'model/MainPresenterModel.dart';
@@ -23,6 +24,7 @@ class MainPresenter{
   var _signaturePresenter;
   var _daysOfTheWeekPresenter;
   var _dayTimetablePresenter;
+  var _visitsPresenter;
 
   var _mainPresenterView;
   var _mainPresenterModel;
@@ -38,6 +40,7 @@ class MainPresenter{
   get signaturePresenter => _signaturePresenter;
   get daysOfTheWeekPresenter => _daysOfTheWeekPresenter;
   get dayTimetablePresenter => _dayTimetablePresenter;
+  get visitsPresenter => _visitsPresenter;
 
   MainPresenter(){
     _mainPresenterModel = MainPresenterModel(this);
@@ -51,6 +54,7 @@ class MainPresenter{
     _statisticsPresenter = StatisticsPresenter(this);
     _daysOfTheWeekPresenter = DaysOfTheWeekPresenter(this);
     _dayTimetablePresenter = DayTimetablePresenter(this);
+    _visitsPresenter = VisitsPresenter(this);
   }
 
 

@@ -1,4 +1,6 @@
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutterapp/DayTimetable/entities/Subject.dart';
 import 'package:flutterapp/DayTimetable/view/DayTimetableView.dart';
 import 'package:flutterapp/MainPresenter/MainPresenter.dart';
@@ -38,5 +40,11 @@ class DayTimetablePresenter{
 
   void addNewSubjectToDB(){
     //TODO
+  }
+
+  void goToVisits(BuildContext context){
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => _mainPresenter.visitsPresenter.visitsView),
+    );
   }
 }
