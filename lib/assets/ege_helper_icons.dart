@@ -28,5 +28,6 @@ class EgeHelper {
   static const IconData question = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData pencil = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData logo = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData plus = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData question_circle_o = IconData(0xf29c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

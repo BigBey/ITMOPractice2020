@@ -19,7 +19,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Понедельник"),
               onPressed: (){
-
+                _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
             flex: 1,
@@ -28,7 +28,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Вторник"),
               onPressed: (){
-
+                _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
             flex: 1,
@@ -37,7 +37,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Среда"),
               onPressed: (){
-
+                _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
             flex: 1,
@@ -46,7 +46,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Четверг"),
               onPressed: (){
-
+                _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
             flex: 1,
@@ -55,7 +55,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Пятница"),
               onPressed: (){
-
+                _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
             flex: 1,
