@@ -1,21 +1,33 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Catalog/variants/entities/Group.dart';
-import 'package:flutterapp/Catalog/variants/presenter/VariantsPresenter.dart';
-import 'package:flutterapp/Catalog/variants/view/Item.dart';
+import 'package:flutterapp/Catalog/Groups/entities/Group.dart';
+import 'package:flutterapp/Catalog/Groups/presenter/GroupsPresenter.dart';
 
-class VariantsView extends StatelessWidget{
+class GroupsView extends StatefulWidget{
 
   var _variantsPresenter;
-  List<Group> groups;
 
-  VariantsView(VariantsPresenter _variantsPresenter){
+  GroupsView(this._variantsPresenter);
+
+  @override
+  State<StatefulWidget> createState() => _GroupsViewState(_variantsPresenter);
+
+}
+
+class _GroupsViewState extends State<GroupsView>{
+
+  var _variantsPresenter;
+  List<Group> _groups;
+
+  _GroupsViewState(GroupsPresenter _variantsPresenter){
     this._variantsPresenter = _variantsPresenter;
-    groups = List<Group>();
-    groups.add(Group("123", "M32031"));
-    groups.add(Group("123", "M32031"));
-    groups.add(Group("123", "M32031"));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _groups = _variantsPresenter.catalogPresenter.catalogModel.groups;
   }
 
   @override
@@ -30,7 +42,7 @@ class VariantsView extends StatelessWidget{
       padding: EdgeInsets.only(top: 5),
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-          itemCount: groups.length,
+          itemCount: _groups.length,
           itemBuilder: (_, index){
             return Center(
                 child: GestureDetector(
@@ -47,7 +59,7 @@ class VariantsView extends StatelessWidget{
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Center(child: Text(
-                              "${groups[index].title}",
+                              "${_groups[index].title}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
@@ -56,5 +68,11 @@ class VariantsView extends StatelessWidget{
                             ))))));
           }),
     );
+  }
+
+  void addGroup(String groupId, String groupTitle){
+    setState(() {
+      _groups.add(Group(groupId, groupTitle));
+    });
   }
 }

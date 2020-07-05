@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Catalog/Groups/presenter/GroupsPresenter.dart';
+import 'package:flutterapp/Catalog/NewGroupCreator/presenter/NewGroupCreatorPresenter.dart';
 import 'package:flutterapp/Catalog/model/CatalogModel.dart';
-import 'package:flutterapp/Catalog/tasks/presenter/TasksPresenter.dart';
-import 'package:flutterapp/Catalog/variants/presenter/VariantsPresenter.dart';
 import 'package:flutterapp/Catalog/view/CatalogView.dart';
 import 'package:flutterapp/MainPresenter/MainPresenter.dart';
 
 class CatalogPresenter {
   var _variantsPresenter;
-  var _tasksPresenter;
+  var _newGroupCreatorPresenter;
   var _mainPresenter;
 
   get mainPresenter => _mainPresenter;
@@ -19,7 +19,8 @@ class CatalogPresenter {
 
   get variantsPresenter => _variantsPresenter;
 
-  get tasksPresenter => _tasksPresenter;
+  get tasksPresenter => _newGroupCreatorPresenter;
+
 
   set state(value) {
     _state = value;
@@ -29,8 +30,8 @@ class CatalogPresenter {
     _mainPresenter = mainPresenter;
     _catalogView = CatalogView(this);
     _catalogModel = CatalogModel(this);
-    _variantsPresenter = VariantsPresenter(this);
-    _tasksPresenter = TasksPresenter();
+    _variantsPresenter = GroupsPresenter(this);
+    _newGroupCreatorPresenter = NewGroupCreatorPresenter(this);
   }
 
   get catalogView => _catalogView;
@@ -76,5 +77,15 @@ class CatalogPresenter {
 
   void goBack(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  void initGroups(){
+    //TODO implement using Model and firebase
+    _catalogModel.initGroups();
+  }
+
+  void addGroup(String groupTitle){
+    //TODO add group to DB using model
+    _catalogModel.addGroup(groupTitle);
   }
 }

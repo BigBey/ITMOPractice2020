@@ -1,30 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/GroupCreator/presenter/GroupCreatorPresenter.dart';
 import 'package:flutterapp/Visits/entities/Student.dart';
-import 'package:flutterapp/Visits/presenter/VisitsPresenter.dart';
 
-class VisitsView extends StatefulWidget {
-  var _visitsPresenter;
+class GroupCreatorView extends StatefulWidget {
+  var _groupCreatorPresenter;
 
-  VisitsView(VisitsPresenter visitsPresenter) {
-    _visitsPresenter = visitsPresenter;
+  GroupCreatorView(GroupCreatorPresenter groupCreatorPresenter) {
+    _groupCreatorPresenter = groupCreatorPresenter;
   }
 
   @override
-  State<StatefulWidget> createState() => _VisitsViewState(_visitsPresenter);
+  State<StatefulWidget> createState() => _GroupCreatorViewState(_groupCreatorPresenter);
 }
 
-class _VisitsViewState extends State<VisitsView> {
-  var _visitsPresenter;
+class _GroupCreatorViewState extends State<GroupCreatorView> {
+  var _groupCreatorPresenter;
   List<Student> _students;
 
-  _VisitsViewState(this._visitsPresenter);
+  _GroupCreatorViewState(this._groupCreatorPresenter);
 
   @override
   void initState() {
     super.initState();
-    _visitsPresenter.initStudents();
-    _students = _visitsPresenter.visitsModel.students;
+    _groupCreatorPresenter.initStudents();
+    _students = _groupCreatorPresenter.visitsModel.students;
   }
 
   @override

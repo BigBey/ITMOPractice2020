@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Catalog/tasks/presenter/TasksPresenter.dart';
-import 'package:flutterapp/Catalog/variants/view/Item.dart';
-class TasksView extends StatefulWidget{
+import 'package:flutterapp/Catalog/NewGroupCreator/presenter/NewGroupCreatorPresenter.dart';
+
+class NewGroupCreatorView extends StatefulWidget{
   var _tasksPresenter;
 
-  TasksView(this._tasksPresenter);
+  NewGroupCreatorView(this._tasksPresenter);
 
   @override
-  State<StatefulWidget> createState() => _TasksViewState(_tasksPresenter);
+  State<StatefulWidget> createState() => _NewGroupCreatorViewState(_tasksPresenter);
 }
 
-class _TasksViewState extends State<TasksView>{
+class _NewGroupCreatorViewState extends State<NewGroupCreatorView>{
   var _tasksPresenter;
   TextEditingController _groupTitle;
 
-  _TasksViewState(TasksPresenter _tasksPresenter){
+  _NewGroupCreatorViewState(NewGroupCreatorPresenter _tasksPresenter){
     this._tasksPresenter = _tasksPresenter;
   }
 
@@ -38,7 +38,7 @@ class _TasksViewState extends State<TasksView>{
           ),
           FlatButton(
             onPressed: (){
-
+              _tasksPresenter.catalogPresenter.addGroup(_groupTitle.text);
             },
             child: Text("Подтвердить"),
           )

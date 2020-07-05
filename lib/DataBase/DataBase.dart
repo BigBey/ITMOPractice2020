@@ -1,8 +1,8 @@
 
 import 'dart:io';
 
-import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
-import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
+import 'package:flutterapp/Catalog/Groups/model/ProfilMathVariantsModel.dart';
+import 'package:flutterapp/Catalog/NewGroupCreator/model/ProfilMathTaskModel.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

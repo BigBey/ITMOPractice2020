@@ -1,8 +1,9 @@
 
+import 'package:flutterapp/Catalog/Groups/view/GroupsView.dart';
 import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
-import 'package:flutterapp/Catalog/variants/view/VariantsView.dart';
 
-class VariantsPresenter{
+
+class GroupsPresenter{
 
   var _variantsView;
   var _catalogPresenter;
@@ -11,8 +12,8 @@ class VariantsPresenter{
 
   get catalogPresenter => _catalogPresenter;
 
-  VariantsPresenter(CatalogPresenter catalogPresenter){
-    _variantsView = new VariantsView(this);
+  GroupsPresenter(CatalogPresenter catalogPresenter){
+    _variantsView = new GroupsView(this);
     _catalogPresenter = catalogPresenter;
   }
 }

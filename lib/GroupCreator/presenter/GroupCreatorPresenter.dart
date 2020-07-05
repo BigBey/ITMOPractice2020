@@ -1,10 +1,9 @@
 
+import 'package:flutterapp/GroupCreator/view/GroupCreatorView.dart';
 import 'package:flutterapp/MainPresenter/MainPresenter.dart';
-import 'package:flutterapp/Visits/entities/Student.dart';
-import 'package:flutterapp/Visits/model/VisitsModel.dart';
-import 'package:flutterapp/Visits/view/VisitsView.dart';
+import 'package:flutterapp/GroupCreator/model/GroupCreatorModel.dart';
 
-class VisitsPresenter{
+class GroupCreatorPresenter{
   var _mainPresenter;
   var _visitsView;
   var _visitsModel;
@@ -14,10 +13,10 @@ class VisitsPresenter{
   get visitsModel => _visitsModel;
 
 
-  VisitsPresenter(MainPresenter mainPresenter){
+  GroupCreatorPresenter(MainPresenter mainPresenter){
     _mainPresenter = mainPresenter;
-    _visitsView = new VisitsView(this);
-    _visitsModel = VisitsModel(this);
+    _visitsView = new GroupCreatorView(this);
+    _visitsModel = new GroupCreatorModel(this);
   }
 
   void initStudents(){

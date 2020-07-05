@@ -34,7 +34,7 @@ class DayTimetableViewState extends State<DayTimetableView> {
   void initState() {
     super.initState();
     _dayTimetablePresenter.getSubjectFromDB();
-    subjects = _dayTimetablePresenter.subjects;
+    subjects = _dayTimetablePresenter.dayTimetableModel.subjects;
     _titleController = TextEditingController();
     _teacherName = TextEditingController();
     _textBook = TextEditingController();
