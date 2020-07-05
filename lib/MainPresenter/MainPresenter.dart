@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/Blitz/presenter/BlitzPresenter.dart';
 import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 import 'package:flutterapp/DayTimetable/presenter/DayTimetablePresenter.dart';
+import 'package:flutterapp/GroupCreator/presenter/GroupCreatorPresenter.dart';
 import 'package:flutterapp/MainPresenter/view/MainPresenterView.dart';
 import 'package:flutterapp/MainScreen/presenter/MainScreenPresenter.dart';
 import 'package:flutterapp/Signature/presenter/SignaturePresenter.dart';
@@ -26,7 +27,7 @@ class MainPresenter{
   var _daysOfTheWeekPresenter;
   var _dayTimetablePresenter;
   var _visitsPresenter;
-  //final _firestoreInstance = Firestore.instance;
+  var _groupCreatorPresenter;
 
   var _mainPresenterView;
   var _mainPresenterModel;
@@ -43,7 +44,7 @@ class MainPresenter{
   get daysOfTheWeekPresenter => _daysOfTheWeekPresenter;
   get dayTimetablePresenter => _dayTimetablePresenter;
   get visitsPresenter => _visitsPresenter;
-  //get firestoreInstance => _firestoreInstance;
+  get groupCreatorPresenter => _groupCreatorPresenter;
 
   MainPresenter(){
     _mainPresenterModel = MainPresenterModel(this);
@@ -58,6 +59,7 @@ class MainPresenter{
     _daysOfTheWeekPresenter = DaysOfTheWeekPresenter(this);
     _dayTimetablePresenter = DayTimetablePresenter(this);
     _visitsPresenter = VisitsPresenter(this);
+    _groupCreatorPresenter = GroupCreatorPresenter(this);
   }
 
 

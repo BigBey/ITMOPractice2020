@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/GroupCreator/entities/Student.dart';
 import 'package:flutterapp/GroupCreator/presenter/GroupCreatorPresenter.dart';
-import 'package:flutterapp/Visits/entities/Student.dart';
 
 class GroupCreatorView extends StatefulWidget {
   var _groupCreatorPresenter;
@@ -24,7 +24,7 @@ class _GroupCreatorViewState extends State<GroupCreatorView> {
   void initState() {
     super.initState();
     _groupCreatorPresenter.initStudents();
-    _students = _groupCreatorPresenter.visitsModel.students;
+    _students = _groupCreatorPresenter.groupCreatorModel.students;
   }
 
   @override

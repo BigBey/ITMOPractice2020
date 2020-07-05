@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/assets/ege_helper_icons.dart';
 import 'package:flutterapp/days_of_week/presenter/DaysOfTheWeekPresenter.dart';
 
 class DaysOfTheWeekView extends StatelessWidget{
@@ -13,8 +14,30 @@ class DaysOfTheWeekView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Column(
+      body: Column(
         children: <Widget>[
+          new Expanded(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    onPressed: (){
+                      _daysOfTheWeekPresenter.goToGroupCreator(context);
+                    },
+                    child: Text(
+                      "Студенты",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    color: Colors.indigo,
+                  ),
+                )
+              ],
+            ),
+            flex: 1,
+          ),
           new Expanded(
             child: FlatButton(
               child: Text("Понедельник"),
@@ -62,7 +85,7 @@ class DaysOfTheWeekView extends StatelessWidget{
           ),
         ],
       )
-    ));
+    );
   }
 
 

@@ -26,4 +26,10 @@ class DaysOfTheWeekPresenter{
     );
   }
 
+  void goToGroupCreator(BuildContext context){
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => _mainPresenter.groupCreatorPresenter.groupCreatorView),
+    );
+  }
+
 }

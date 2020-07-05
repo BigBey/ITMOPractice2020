@@ -5,26 +5,25 @@ import 'package:flutterapp/GroupCreator/model/GroupCreatorModel.dart';
 
 class GroupCreatorPresenter{
   var _mainPresenter;
-  var _visitsView;
-  var _visitsModel;
+  var _groupCreatorView;
+  var _groupCreatorModel;
 
   get mainPresenter => _mainPresenter;
-  get visitsView => _visitsView;
-  get visitsModel => _visitsModel;
-
+  get groupCreatorView => _groupCreatorView;
+  get groupCreatorModel => _groupCreatorModel;
 
   GroupCreatorPresenter(MainPresenter mainPresenter){
     _mainPresenter = mainPresenter;
-    _visitsView = new GroupCreatorView(this);
-    _visitsModel = new GroupCreatorModel(this);
+    _groupCreatorView = new GroupCreatorView(this);
+    _groupCreatorModel = new GroupCreatorModel(this);
   }
 
   void initStudents(){
-    _visitsModel.initStudents();
+    _groupCreatorModel.initStudents();
   }
 
   void checkVisits(){
     //TODO
-    _visitsModel.checkVisits();
+    _groupCreatorModel.checkVisits();
   }
 }

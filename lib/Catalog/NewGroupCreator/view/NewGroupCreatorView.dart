@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/NewGroupCreator/presenter/NewGroupCreatorPresenter.dart';
@@ -38,7 +39,9 @@ class _NewGroupCreatorViewState extends State<NewGroupCreatorView>{
           ),
           FlatButton(
             onPressed: (){
-              _tasksPresenter.catalogPresenter.addGroup(_groupTitle.text);
+              Firestore.instance.collection("Groups").add(
+                {"group_name" : "${_groupTitle.text}"}
+              );
             },
             child: Text("Подтвердить"),
           )
