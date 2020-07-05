@@ -1,5 +1,6 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/Groups/entities/Group.dart';
 import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
@@ -24,8 +25,12 @@ class CatalogModel{
     _groups.add(Group("123", "M32031"));
   }
 
-  void initGroups(){
-    //TODO implement using Model and firebase
+  void initGroups() async{
+    return await Firestore.instance.collection("Groups").getDocuments().then((querySnapshot){
+      querySnapshot.documents.forEach((result){
+        print(result.data);
+      });
+    });
   }
 
   void addGroup(String groupTitle){

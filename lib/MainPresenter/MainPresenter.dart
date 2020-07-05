@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/Blitz/presenter/BlitzPresenter.dart';
 import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 import 'package:flutterapp/DayTimetable/presenter/DayTimetablePresenter.dart';
@@ -25,6 +26,7 @@ class MainPresenter{
   var _daysOfTheWeekPresenter;
   var _dayTimetablePresenter;
   var _visitsPresenter;
+  //final _firestoreInstance = Firestore.instance;
 
   var _mainPresenterView;
   var _mainPresenterModel;
@@ -41,6 +43,7 @@ class MainPresenter{
   get daysOfTheWeekPresenter => _daysOfTheWeekPresenter;
   get dayTimetablePresenter => _dayTimetablePresenter;
   get visitsPresenter => _visitsPresenter;
+  //get firestoreInstance => _firestoreInstance;
 
   MainPresenter(){
     _mainPresenterModel = MainPresenterModel(this);

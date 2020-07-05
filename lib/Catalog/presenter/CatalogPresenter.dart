@@ -81,7 +81,7 @@ class CatalogPresenter {
 
   void initGroups(){
     //TODO implement using Model and firebase
-    _catalogModel.initGroups();
+    var groups = _catalogModel.initGroups();
   }
 
   void addGroup(String groupTitle){
