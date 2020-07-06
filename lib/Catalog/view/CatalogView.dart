@@ -24,7 +24,7 @@ class CatalogViewState extends State<CatalogView> {
   CatalogViewState(CatalogPresenter catalogPresenter){
 
     _catalogPresenter = catalogPresenter;
-    fragments[0] = this._catalogPresenter.variantsPresenter.variantsView;
+    fragments[0] = this._catalogPresenter.groupsPresenter.groupsView;
     fragments[1] = this._catalogPresenter.tasksPresenter.tasksView;
   }
 

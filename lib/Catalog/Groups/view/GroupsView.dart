@@ -7,28 +7,28 @@ import 'package:flutterapp/Catalog/Groups/presenter/GroupsPresenter.dart';
 
 class GroupsView extends StatefulWidget{
 
-  var _variantsPresenter;
+  var _groupsPresenter;
 
-  GroupsView(this._variantsPresenter);
+  GroupsView(this._groupsPresenter);
 
   @override
-  State<StatefulWidget> createState() => _GroupsViewState(_variantsPresenter);
+  State<StatefulWidget> createState() => _GroupsViewState(_groupsPresenter);
 
 }
 
 class _GroupsViewState extends State<GroupsView>{
 
-  var _variantsPresenter;
+  var _groupsPresenter;
   List<Group> _groups;
 
-  _GroupsViewState(GroupsPresenter _variantsPresenter){
-    this._variantsPresenter = _variantsPresenter;
+  _GroupsViewState(GroupsPresenter _groupsPresenter){
+    this._groupsPresenter = _groupsPresenter;
   }
 
   @override
   void initState() {
     super.initState();
-    _groups = _variantsPresenter.catalogPresenter.catalogModel.groups;
+    _groups = _groupsPresenter.catalogPresenter.catalogModel.groups;
   }
 
   @override
@@ -52,13 +52,14 @@ class _GroupsViewState extends State<GroupsView>{
                 return Center(
                     child: GestureDetector(
                         onTap: () {
-                          _variantsPresenter.catalogPresenter.goToDayTimetable(context);
+                          _groupsPresenter.catalogPresenter.setGroupId(snapshot.data.documents[index].documentID);
+                          _groupsPresenter.catalogPresenter.goToDayTimetable(context);
                         },
                         child: Container(
                             height: 100,
                             width: 100,
                             child: Card(
-                                color:  _variantsPresenter.catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+                                color:  _groupsPresenter.catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
                                 elevation: 20,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),

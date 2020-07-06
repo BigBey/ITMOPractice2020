@@ -2,21 +2,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/MainPresenter/MainPresenter.dart';
+import 'package:flutterapp/days_of_week/model/DaysOfTheWeekModel.dart';
 import 'package:flutterapp/days_of_week/view/DaysOfTheWeekView.dart';
 
 class DaysOfTheWeekPresenter{
   var _daysOfTheWeekView;
+  var _daysOfTheWeekModel;
   var _mainPresenter;
-  var _groupId;
 
   get daysOfTheWeekView => _daysOfTheWeekView;
-  get groupId => _groupId;
-  set groupId(value) {
-    _groupId = value;
-  }
+  get daysOfTheWeekModel => _daysOfTheWeekModel;
 
   DaysOfTheWeekPresenter(MainPresenter mainPresenter){
     _daysOfTheWeekView = new DaysOfTheWeekView(this);
+    _daysOfTheWeekModel = new DaysOfTheWeekModel(this);
     _mainPresenter = mainPresenter;
   }
 

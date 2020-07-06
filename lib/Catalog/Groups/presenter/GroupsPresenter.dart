@@ -5,15 +5,14 @@ import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 
 class GroupsPresenter{
 
-  var _variantsView;
+  var _groupsView;
   var _catalogPresenter;
 
-  get variantsView => _variantsView;
-
+  get groupsView => _groupsView;
   get catalogPresenter => _catalogPresenter;
 
   GroupsPresenter(CatalogPresenter catalogPresenter){
-    _variantsView = new GroupsView(this);
+    _groupsView = new GroupsView(this);
     _catalogPresenter = catalogPresenter;
   }
 }

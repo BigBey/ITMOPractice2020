@@ -35,10 +35,6 @@ class DayTimetablePresenter{
     _dayTimetableModel = DayTimetableModel(this);
   }
 
-  void getSubjectFromDB(){
-    _dayTimetableModel.getSubjectsFromDB();
-  }
-
   void addNewSubjectToDB(){
     //TODO
     _dayTimetableModel.addNewSubjectToDB();

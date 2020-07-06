@@ -6,7 +6,7 @@ import 'package:flutterapp/Catalog/view/CatalogView.dart';
 import 'package:flutterapp/MainPresenter/MainPresenter.dart';
 
 class CatalogPresenter {
-  var _variantsPresenter;
+  var _groupsPresenter;
   var _newGroupCreatorPresenter;
   var _mainPresenter;
 
@@ -17,7 +17,7 @@ class CatalogPresenter {
 
   get catalogModel => _catalogModel;
 
-  get variantsPresenter => _variantsPresenter;
+  get groupsPresenter => _groupsPresenter;
 
   get tasksPresenter => _newGroupCreatorPresenter;
 
@@ -30,7 +30,7 @@ class CatalogPresenter {
     _mainPresenter = mainPresenter;
     _catalogView = CatalogView(this);
     _catalogModel = CatalogModel(this);
-    _variantsPresenter = GroupsPresenter(this);
+    _groupsPresenter = GroupsPresenter(this);
     _newGroupCreatorPresenter = NewGroupCreatorPresenter(this);
   }
 
@@ -79,9 +79,8 @@ class CatalogPresenter {
     Navigator.pop(context);
   }
 
-  void initGroups(){
-    //TODO implement using Model and firebase
-    var groups = _catalogModel.initGroups();
+  void setGroupId(String _groupId){
+    mainPresenter.daysOfTheWeekPresenter.daysOfTheWeekModel.groupId = _groupId;
   }
 
   void addGroup(String groupTitle){

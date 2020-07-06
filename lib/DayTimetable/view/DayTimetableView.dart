@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/DayTimetable/entities/Subject.dart';
@@ -18,7 +19,6 @@ class DayTimetableView extends StatefulWidget {
 
 class DayTimetableViewState extends State<DayTimetableView> {
   var _dayTimetablePresenter;
-  var subjects = List<Subject>();
   TextEditingController _titleController;
   TextEditingController _teacherName;
   TextEditingController _textBook;
@@ -33,8 +33,6 @@ class DayTimetableViewState extends State<DayTimetableView> {
   @override
   void initState() {
     super.initState();
-    _dayTimetablePresenter.getSubjectFromDB();
-    subjects = _dayTimetablePresenter.dayTimetableModel.subjects;
     _titleController = TextEditingController();
     _teacherName = TextEditingController();
     _textBook = TextEditingController();
@@ -57,52 +55,86 @@ class DayTimetableViewState extends State<DayTimetableView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: <Widget>[
-        new Expanded(
-          child: Row(
-            children: <Widget>[
-              Container(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    icon: Icon(
-                      EgeHelper.plus,
-                      color: _dayTimetablePresenter
-                          .mainPresenter.mainPresenterModel.themeColorEnd,
+        body: StreamBuilder(
+            stream: Firestore.instance
+                .collection("Lessons")
+                .where("group_id",
+                    isEqualTo: _dayTimetablePresenter.mainPresenter
+                        .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                  child: Text("Loading..."),
+                );
+              return Column(
+                children: <Widget>[
+                  new Expanded(
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(
+                                EgeHelper.plus,
+                                color: _dayTimetablePresenter.mainPresenter
+                                    .mainPresenterModel.themeColorEnd,
+                              ),
+                              onPressed: () {
+                                _showMyDialog();
+                              },
+                            ))
+                      ],
                     ),
-                    onPressed: () {
-                      _showMyDialog();
-                    },
-                  ))
-            ],
-          ),
-          flex: 1,
-        ),
-        new Expanded(
-          child: ListView.builder(
-              itemCount: subjects.length,
-              itemBuilder: (_, index) {
-                return GestureDetector(
-                    onTap: () {
-                      _dayTimetablePresenter.goToVisits(context);
-                    },
-                    child: Card(
-                      child: Column(
-                        children: <Widget>[
-                          Text(subjects[index].title),
-                          Text(subjects[index].teacherName),
-                          Text(subjects[index].textBook),
-                          Text(subjects[index].textBookRef),
-                          Text(subjects[index].description),
-                          Text(subjects[index].homework),
-                        ],
-                      ),
-                    ));
-              }),
-          flex: 9,
-        )
-      ],
-    ));
+                    flex: 1,
+                  ),
+                  new Expanded(
+                    child: ListView.builder(
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (_, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                _dayTimetablePresenter.goToVisits(context);
+                              },
+                              child: Card(
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(snapshot.data.documents[index]
+                                        ["title"]),
+                                    StreamBuilder(
+                                      stream: Firestore.instance
+                                          .collection("Teachers")
+                                          .document(snapshot.data
+                                              .documents[index]["teacher_id"])
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return new Text("Loading");
+                                        }
+                                        var teacherDocument = snapshot.data;
+                                        return new Text(
+                                            "${teacherDocument["lastname"]} ${teacherDocument["name"]}");
+                                      },
+                                    ),
+                                    Text(snapshot.data.documents[index]
+                                        ["textbook"]),
+                                    Text(snapshot.data.documents[index]
+                                        ["textbook_ref"]),
+                                    Text(snapshot.data.documents[index]
+                                        ["theme"]),
+                                    Text(snapshot.data.documents[index]
+                                        ["hometask"]),
+                                    Text(snapshot.data.documents[index]
+                                        ["zoom_link"]),
+                                  ],
+                                ),
+                              ));
+                        }),
+                    flex: 9,
+                  )
+                ],
+              );
+            }));
   }
 
   Future<void> _showMyDialog() async {
@@ -170,7 +202,6 @@ class DayTimetableViewState extends State<DayTimetableView> {
             FlatButton(
               child: Text('Подтвердить'),
               onPressed: () {
-                _addItem();
                 Navigator.of(context).pop();
               },
             ),
@@ -178,17 +209,5 @@ class DayTimetableViewState extends State<DayTimetableView> {
         );
       },
     );
-  }
-
-  void _addItem() {
-    setState(() {
-      subjects.add(Subject(
-          _titleController.text,
-          _teacherName.text,
-          _textBook.text,
-          _textBookRef.text,
-          _description.text,
-          _homework.text));
-    });
   }
 }
