@@ -12,6 +12,7 @@ class DaysOfTheWeekPresenter{
 
   get daysOfTheWeekView => _daysOfTheWeekView;
   get daysOfTheWeekModel => _daysOfTheWeekModel;
+  get mainPresenter => _mainPresenter;
 
   DaysOfTheWeekPresenter(MainPresenter mainPresenter){
     _daysOfTheWeekView = new DaysOfTheWeekView(this);

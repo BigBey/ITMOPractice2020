@@ -20,11 +20,13 @@ class DayTimetableView extends StatefulWidget {
 class DayTimetableViewState extends State<DayTimetableView> {
   var _dayTimetablePresenter;
   TextEditingController _titleController;
+  TextEditingController _teacherLastName;
   TextEditingController _teacherName;
   TextEditingController _textBook;
   TextEditingController _textBookRef;
   TextEditingController _description;
   TextEditingController _homework;
+  TextEditingController _zoomRef;
 
   DayTimetableViewState(DayTimetablePresenter dayTimetablePresenter) {
     _dayTimetablePresenter = dayTimetablePresenter;
@@ -35,20 +37,24 @@ class DayTimetableViewState extends State<DayTimetableView> {
     super.initState();
     _titleController = TextEditingController();
     _teacherName = TextEditingController();
+    _teacherLastName = TextEditingController();
     _textBook = TextEditingController();
     _textBookRef = TextEditingController();
     _description = TextEditingController();
     _homework = TextEditingController();
+    _zoomRef = TextEditingController();
   }
 
   @override
   void dispose() {
     _titleController.dispose();
     _teacherName.dispose();
+    _teacherLastName.dispose();
     _textBook.dispose();
     _textBookRef.dispose();
     _description.dispose();
     _homework.dispose();
+    _zoomRef.dispose();
     super.dispose();
   }
 
@@ -61,6 +67,9 @@ class DayTimetableViewState extends State<DayTimetableView> {
                 .where("group_id",
                     isEqualTo: _dayTimetablePresenter.mainPresenter
                         .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+                .where("day_of_week",
+                    isEqualTo:
+                        "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}")
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
@@ -81,7 +90,7 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                     .mainPresenterModel.themeColorEnd,
                               ),
                               onPressed: () {
-                                _showMyDialog();
+                                _showMyDialog(snapshot.data.documents.length);
                               },
                             ))
                       ],
@@ -137,7 +146,7 @@ class DayTimetableViewState extends State<DayTimetableView> {
             }));
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showMyDialog(int subjectLength) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -155,10 +164,17 @@ class DayTimetableViewState extends State<DayTimetableView> {
                   ),
                 ),
                 TextField(
+                  controller: _teacherLastName,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Фамилия преподавателя',
+                  ),
+                ),
+                TextField(
                   controller: _teacherName,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'ФИО преподавателя',
+                    labelText: 'Имя преподавателя',
                   ),
                 ),
                 TextField(
@@ -189,6 +205,13 @@ class DayTimetableViewState extends State<DayTimetableView> {
                     labelText: 'Домашнее задание',
                   ),
                 ),
+                TextField(
+                  controller: _zoomRef,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Zoom-конференция',
+                  ),
+                ),
               ],
             ),
           ),
@@ -202,6 +225,17 @@ class DayTimetableViewState extends State<DayTimetableView> {
             FlatButton(
               child: Text('Подтвердить'),
               onPressed: () {
+                _dayTimetablePresenter.dayTimetableModel.addNewSubjectToDB(
+                    context,
+                    _titleController.text,
+                    _teacherLastName.text,
+                    _teacherName.text,
+                    _textBook.text,
+                    _textBookRef.text,
+                    _description.text,
+                    _homework.text,
+                    _zoomRef.text,
+                    subjectLength + 1);
                 Navigator.of(context).pop();
               },
             ),

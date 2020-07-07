@@ -42,6 +42,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Понедельник"),
               onPressed: (){
+                _daysOfTheWeekPresenter.mainPresenter.dayTimetablePresenter.dayTimetableModel.dayOfTheWeek = "Понедельник";
                 _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
@@ -51,6 +52,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Вторник"),
               onPressed: (){
+                _daysOfTheWeekPresenter.mainPresenter.dayTimetablePresenter.dayTimetableModel.dayOfTheWeek = "Вторник";
                 _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
@@ -60,6 +62,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Среда"),
               onPressed: (){
+                _daysOfTheWeekPresenter.mainPresenter.dayTimetablePresenter.dayTimetableModel.dayOfTheWeek = "Среда";
                 _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
@@ -69,6 +72,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Четверг"),
               onPressed: (){
+                _daysOfTheWeekPresenter.mainPresenter.dayTimetablePresenter.dayTimetableModel.dayOfTheWeek = "Четверг";
                 _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
@@ -78,6 +82,7 @@ class DaysOfTheWeekView extends StatelessWidget{
             child: FlatButton(
               child: Text("Пятница"),
               onPressed: (){
+                _daysOfTheWeekPresenter.mainPresenter.dayTimetablePresenter.dayTimetableModel.dayOfTheWeek = "Пятница";
                 _daysOfTheWeekPresenter.goToDayTimetable(context);
               },
             ),
