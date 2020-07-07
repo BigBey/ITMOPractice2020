@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Visits/entities/Student.dart';
@@ -16,15 +17,12 @@ class VisitsView extends StatefulWidget {
 
 class _VisitsViewState extends State<VisitsView> {
   var _visitsPresenter;
-  List<Student> _students;
 
   _VisitsViewState(this._visitsPresenter);
 
   @override
   void initState() {
     super.initState();
-    _visitsPresenter.initStudents();
-    _students = _visitsPresenter.visitsModel.students;
   }
 
   @override
@@ -38,24 +36,59 @@ class _VisitsViewState extends State<VisitsView> {
             ),
             flex: 1),
         Expanded(
-            child: ListView.builder(
-                itemCount: _students.length,
-                itemBuilder: (_, index) {
-                  return Card(
-                    child: CheckboxListTile(
-                      title: Text("${_students[index].name}"),
-                      controlAffinity:
-                        ListTileControlAffinity.platform,
-                      value: _students[index].visit,
-                      onChanged: (bool value){
-                        setState(() {
-                          _students[index].visit = value;
-                        });
-                      },
-                      activeColor: Colors.indigo,
-                      checkColor: Colors.white,
-                    )
-                    );
+            child: StreamBuilder(
+                stream: Firestore.instance
+                    .collection("Students")
+                    .where("group_id",
+                        isEqualTo: _visitsPresenter.mainPresenter
+                            .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading...");
+                  }
+                  return ListView.builder(
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (_, index) {
+                        return Card(
+                            child: StreamBuilder(
+                                stream: Firestore.instance
+                                    .collection('Visits')
+                                    .where("student_id",
+                                        isEqualTo: snapshot
+                                            .data.documents[index].documentID)
+                                    .where("lesson_id",
+                                        isEqualTo: _visitsPresenter
+                                            .visitsModel.lessonId)
+                                    .snapshots(),
+                                builder: (context, futureSnapshot) {
+                                  if (futureSnapshot.hasData) {
+                                    return CheckboxListTile(
+                                      title: Text(
+                                          "${snapshot.data.documents[index]["lastname"]} ${snapshot.data.documents[index]["name"]}"),
+                                      controlAffinity:
+                                          ListTileControlAffinity.platform,
+                                      value: futureSnapshot.data.documents[0]["last_visit"],
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          _visitsPresenter.visitsModel
+                                              .markStudentVisit(
+                                                  snapshot.data.documents[index]
+                                                      .documentID,
+                                                  _visitsPresenter
+                                                      .visitsModel.lessonId,
+                                                  value);
+                                        });
+                                      },
+                                      activeColor: Colors.indigo,
+                                      checkColor: Colors.white,
+                                    );
+                                  } else {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                }));
+                      });
                 }),
             flex: 9)
       ],

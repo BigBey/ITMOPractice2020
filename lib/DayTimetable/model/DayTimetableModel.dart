@@ -15,7 +15,8 @@ class DayTimetableModel {
 
   DayTimetableModel(this._dayTimetablePresenter);
 
-  Future<void> addNewSubjectToDB(BuildContext context,
+  Future<void> addNewSubjectToDB(
+      BuildContext context,
       String title,
       String teacherLastName,
       String teacherName,
@@ -26,13 +27,10 @@ class DayTimetableModel {
       String zoomRef,
       int index) async {
     var teacherId = "";
-    /*Firestore.instance.collection("Teachers").where("lastname", isEqualTo: teacherLastName).where("name", isEqualTo: teacherName).getDocuments().then((querySnapshot) {
-      teacherId = querySnapshot.documents[0].documentID;
-    });*/
     DocumentReference ref = await Firestore.instance.collection("Lessons").add({
       "day_of_week": _dayOfTheWeek,
-      "group_id": _dayTimetablePresenter.mainPresenter.daysOfTheWeekPresenter
-          .daysOfTheWeekModel.groupId,
+      "group_id": _dayTimetablePresenter
+          .mainPresenter.daysOfTheWeekPresenter.daysOfTheWeekModel.groupId,
       "title": title,
       "teacher_id": teacherId,
       "textbook": textbook,
@@ -42,9 +40,29 @@ class DayTimetableModel {
       "zoom_link": zoomRef,
       "index": index
     });
-    Firestore.instance.collection("Teachers").where(
-        "lastname", isEqualTo: teacherLastName).where(
-        "name", isEqualTo: teacherName).getDocuments().then((value) {
+    Firestore.instance
+        .collection("Students")
+        .where("group_id",
+            isEqualTo: _dayTimetablePresenter.mainPresenter
+                .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+        .getDocuments()
+        .then((valueOfStudents) {
+      valueOfStudents.documents.forEach((element) {
+        Firestore.instance.collection("Visits").add({
+          "lesson_id": ref.documentID,
+          "student_id": element.documentID,
+          "visits_count": 0,
+          "last_visit": false
+        });
+      });
+    });
+
+    Firestore.instance
+        .collection("Teachers")
+        .where("lastname", isEqualTo: teacherLastName)
+        .where("name", isEqualTo: teacherName)
+        .getDocuments()
+        .then((value) {
       teacherId = value.documents[0].documentID;
       try {
         Firestore.instance

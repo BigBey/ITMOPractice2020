@@ -105,6 +105,9 @@ class DayTimetableViewState extends State<DayTimetableView> {
                         itemBuilder: (_, index) {
                           return GestureDetector(
                               onTap: () {
+                                _dayTimetablePresenter
+                                        .mainPresenter.visitsPresenter.visitsModel.lessonId =
+                                    snapshot.data.documents[index].documentID;
                                 _dayTimetablePresenter.goToVisits(context);
                               },
                               child: Card(
@@ -140,11 +143,15 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                         children: [
                                           new TextSpan(
                                             text: 'Ссылка на zoom',
-                                            style: new TextStyle(color: Colors.blue),
-                                            recognizer: new TapGestureRecognizer()
-                                              ..onTap = () { launch(snapshot.data.documents[index]
-                                              ["zoom_link"]);
-                                              },
+                                            style: new TextStyle(
+                                                color: Colors.blue),
+                                            recognizer:
+                                                new TapGestureRecognizer()
+                                                  ..onTap = () {
+                                                    launch(snapshot.data
+                                                            .documents[index]
+                                                        ["zoom_link"]);
+                                                  },
                                           ),
                                         ],
                                       ),
