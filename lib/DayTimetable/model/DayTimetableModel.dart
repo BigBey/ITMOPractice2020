@@ -15,8 +15,7 @@ class DayTimetableModel {
 
   DayTimetableModel(this._dayTimetablePresenter);
 
-  void addNewSubjectToDB(
-      BuildContext context,
+  Future<void> addNewSubjectToDB(BuildContext context,
       String title,
       String teacherLastName,
       String teacherName,
@@ -25,14 +24,15 @@ class DayTimetableModel {
       String theme,
       String hometask,
       String zoomRef,
-      int index) {
+      int index) async {
     var teacherId = "";
     /*Firestore.instance.collection("Teachers").where("lastname", isEqualTo: teacherLastName).where("name", isEqualTo: teacherName).getDocuments().then((querySnapshot) {
       teacherId = querySnapshot.documents[0].documentID;
     });*/
-    Firestore.instance.collection("Lessons").add({
+    DocumentReference ref = await Firestore.instance.collection("Lessons").add({
       "day_of_week": _dayOfTheWeek,
-      "group_id": _dayTimetablePresenter.mainPresenter.daysOfTheWeekPresenter.daysOfTheWeekModel.groupId,
+      "group_id": _dayTimetablePresenter.mainPresenter.daysOfTheWeekPresenter
+          .daysOfTheWeekModel.groupId,
       "title": title,
       "teacher_id": teacherId,
       "textbook": textbook,
@@ -41,6 +41,19 @@ class DayTimetableModel {
       "hometask": hometask,
       "zoom_link": zoomRef,
       "index": index
+    });
+    Firestore.instance.collection("Teachers").where(
+        "lastname", isEqualTo: teacherLastName).where(
+        "name", isEqualTo: teacherName).getDocuments().then((value) {
+      teacherId = value.documents[0].documentID;
+      try {
+        Firestore.instance
+            .collection('Lessons')
+            .document(ref.documentID)
+            .updateData({'teacher_id': teacherId});
+      } catch (e) {
+        print(e.toString());
+      }
     });
   }
 }

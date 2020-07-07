@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/DayTimetable/entities/Subject.dart';
 import 'package:flutterapp/DayTimetable/presenter/DayTimetablePresenter.dart';
 import 'package:flutterapp/assets/ege_helper_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DayTimetableView extends StatefulWidget {
   var _dayTimetablePresenter;
@@ -133,8 +135,20 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                         ["theme"]),
                                     Text(snapshot.data.documents[index]
                                         ["hometask"]),
-                                    Text(snapshot.data.documents[index]
-                                        ["zoom_link"]),
+                                    new RichText(
+                                      text: new TextSpan(
+                                        children: [
+                                          new TextSpan(
+                                            text: 'Ссылка на zoom',
+                                            style: new TextStyle(color: Colors.blue),
+                                            recognizer: new TapGestureRecognizer()
+                                              ..onTap = () { launch(snapshot.data.documents[index]
+                                              ["zoom_link"]);
+                                              },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ));

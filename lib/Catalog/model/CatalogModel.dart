@@ -7,7 +7,7 @@ import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 
 class CatalogModel{
   var _catalogPresenter;
-  var _amountOfAnswers = "50 из 600";
+  var _amountOfAnswers = "";
   List<Group> _groups;
 
   get amountOfAnswers => _amountOfAnswers;
