@@ -82,10 +82,25 @@ class DayTimetableViewState extends State<DayTimetableView> {
                 children: <Widget>[
                   new Expanded(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+                        Container(
+                          child: IconButton(
+                            onPressed: () {
+                              _dayTimetablePresenter.goBack(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: _dayTimetablePresenter.mainPresenter
+                                  .mainPresenterModel.themeColorEnd,
+                            ),
+                            iconSize: 40.0,
+                          ),
+                        ),
                         Container(
                             alignment: Alignment.centerRight,
                             child: IconButton(
+                              iconSize: 40.0,
                               icon: Icon(
                                 EgeHelper.plus,
                                 color: _dayTimetablePresenter.mainPresenter
@@ -97,6 +112,18 @@ class DayTimetableViewState extends State<DayTimetableView> {
                             ))
                       ],
                     ),
+                    flex: 2,
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}",
+                        style: TextStyle(
+                            color: _dayTimetablePresenter
+                                .mainPresenter.mainPresenterModel.themeColorEnd,
+                            fontSize: 20),
+                      ),
+                    ),
                     flex: 1,
                   ),
                   new Expanded(
@@ -105,16 +132,24 @@ class DayTimetableViewState extends State<DayTimetableView> {
                         itemBuilder: (_, index) {
                           return GestureDetector(
                               onTap: () {
-                                _dayTimetablePresenter
-                                        .mainPresenter.visitsPresenter.visitsModel.lessonId =
+                                _dayTimetablePresenter.mainPresenter
+                                        .visitsPresenter.visitsModel.lessonId =
                                     snapshot.data.documents[index].documentID;
                                 _dayTimetablePresenter.goToVisits(context);
                               },
                               child: Card(
+                                color: Colors.white70,
                                 child: Column(
                                   children: <Widget>[
-                                    Text(snapshot.data.documents[index]
-                                        ["title"]),
+                                    Text(
+                                      snapshot.data.documents[index]["title"],
+                                      style: TextStyle(
+                                          color: _dayTimetablePresenter
+                                              .mainPresenter
+                                              .mainPresenterModel
+                                              .themeColorEnd,
+                                          fontSize: 20),
+                                    ),
                                     StreamBuilder(
                                       stream: Firestore.instance
                                           .collection("Teachers")
@@ -127,24 +162,71 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                         }
                                         var teacherDocument = snapshot.data;
                                         return new Text(
-                                            "${teacherDocument["lastname"]} ${teacherDocument["name"]}");
+                                          "${teacherDocument["lastname"]} ${teacherDocument["name"]}",
+                                          style: TextStyle(
+                                              color: _dayTimetablePresenter
+                                                  .mainPresenter
+                                                  .mainPresenterModel
+                                                  .themeColorEnd,
+                                              fontSize: 20),
+                                        );
                                       },
                                     ),
-                                    Text(snapshot.data.documents[index]
-                                        ["textbook"]),
-                                    Text(snapshot.data.documents[index]
-                                        ["textbook_ref"]),
-                                    Text(snapshot.data.documents[index]
-                                        ["theme"]),
-                                    Text(snapshot.data.documents[index]
-                                        ["hometask"]),
+                                    Text(
+                                      snapshot.data.documents[index]
+                                          ["textbook"],
+                                      style: TextStyle(
+                                          color: _dayTimetablePresenter
+                                              .mainPresenter
+                                              .mainPresenterModel
+                                              .themeColorEnd,
+                                          fontSize: 20),
+                                    ),
+                                    new RichText(
+                                      text: new TextSpan(
+                                        children: [
+                                          new TextSpan(
+                                            text: 'Ссылка на учебник',
+                                            style: new TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 20),
+                                            recognizer:
+                                            new TapGestureRecognizer()
+                                              ..onTap = () {
+                                                launch(snapshot.data.documents[index]
+                                                ["textbook_ref"]);
+                                              },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      snapshot.data.documents[index]["theme"],
+                                      style: TextStyle(
+                                          color: _dayTimetablePresenter
+                                              .mainPresenter
+                                              .mainPresenterModel
+                                              .themeColorEnd,
+                                          fontSize: 20),
+                                    ),
+                                    Text(
+                                      snapshot.data.documents[index]
+                                          ["hometask"],
+                                      style: TextStyle(
+                                          color: _dayTimetablePresenter
+                                              .mainPresenter
+                                              .mainPresenterModel
+                                              .themeColorEnd,
+                                          fontSize: 20),
+                                    ),
                                     new RichText(
                                       text: new TextSpan(
                                         children: [
                                           new TextSpan(
                                             text: 'Ссылка на zoom',
                                             style: new TextStyle(
-                                                color: Colors.blue),
+                                                color: Colors.blue,
+                                                fontSize: 20),
                                             recognizer:
                                                 new TapGestureRecognizer()
                                                   ..onTap = () {

@@ -14,6 +14,7 @@ class CatalogPresenter {
   var _catalogView;
   var _catalogModel;
   var _state;
+  var _userId;
 
   get catalogModel => _catalogModel;
 
@@ -21,9 +22,16 @@ class CatalogPresenter {
 
   get tasksPresenter => _newGroupCreatorPresenter;
 
+  get state => _state;
 
   set state(value) {
     _state = value;
+  }
+
+  get userId => _userId;
+
+  set userId(value) {
+    _userId = value;
   }
 
   CatalogPresenter(MainPresenter mainPresenter) {
@@ -42,16 +50,16 @@ class CatalogPresenter {
     switch (_state) {
       case "Student":
         {
-          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.indigo;
-          _mainPresenter.mainPresenterModel.themeColorStart = Colors.indigo;
+          _mainPresenter.mainPresenterModel.themeColorEnd = Color(0xff1e51a4);
+          _mainPresenter.mainPresenterModel.themeColorStart = Color(0xff1e51a4);
           _mainPresenter.mainPresenterModel.amountOfTasks = 26;
         }
         break;
 
       case "Teacher":
         {
-          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.indigo;
-          _mainPresenter.mainPresenterModel.themeColorStart = Colors.indigo;
+          _mainPresenter.mainPresenterModel.themeColorEnd = Color(0xff1e51a4);
+          _mainPresenter.mainPresenterModel.themeColorStart = Color(0xff1e51a4);
           _mainPresenter.mainPresenterModel.amountOfTasks = 12;
         }
         break;

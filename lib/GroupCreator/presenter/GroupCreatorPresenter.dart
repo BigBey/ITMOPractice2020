@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutterapp/GroupCreator/view/GroupCreatorView.dart';
 import 'package:flutterapp/MainPresenter/MainPresenter.dart';
 import 'package:flutterapp/GroupCreator/model/GroupCreatorModel.dart';
@@ -25,5 +26,9 @@ class GroupCreatorPresenter{
   void checkVisits(){
     //TODO
     _groupCreatorModel.checkVisits();
+  }
+
+  void goBack(BuildContext context){
+    Navigator.pop(context);
   }
 }

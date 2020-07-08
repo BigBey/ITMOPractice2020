@@ -45,4 +45,8 @@ class DayTimetablePresenter{
       MaterialPageRoute(builder: (context) => _mainPresenter.visitsPresenter.visitsView),
     );
   }
+
+  void goBack(BuildContext context){
+    Navigator.pop(context);
+  }
 }

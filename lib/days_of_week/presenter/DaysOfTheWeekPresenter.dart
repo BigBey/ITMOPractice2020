@@ -32,4 +32,8 @@ class DaysOfTheWeekPresenter{
     );
   }
 
+  void goBack(BuildContext context){
+    Navigator.pop(context);
+  }
+
 }

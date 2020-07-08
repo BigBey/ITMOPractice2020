@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutterapp/MainPresenter/MainPresenter.dart';
 import 'package:flutterapp/Visits/entities/Student.dart';
 import 'package:flutterapp/Visits/model/VisitsModel.dart';
@@ -27,5 +28,9 @@ class VisitsPresenter{
   void checkVisits(){
     //TODO
     _visitsModel.checkVisits();
+  }
+
+  void goBack(BuildContext context){
+    Navigator.pop(context);
   }
 }

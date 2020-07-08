@@ -1,10 +1,7 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-class MainPresenterView extends StatefulWidget{
+class MainPresenterView extends StatefulWidget {
   var _mainPresenter;
 
   MainPresenterView(this._mainPresenter);
@@ -13,20 +10,16 @@ class MainPresenterView extends StatefulWidget{
   _MainPresenterView createState() => _MainPresenterView(_mainPresenter);
 }
 
-
 class _MainPresenterView extends State<MainPresenterView> {
   int _cIndex = 0;
   var _mainPresenter;
   var tabs = new List<Widget>(2);
 
-
   _MainPresenterView(mainPresenter) {
-
     _mainPresenter = mainPresenter;
     tabs[0] = this._mainPresenter.catalogPresenter.catalogView;
     tabs[1] = this._mainPresenter.statisticsPresenter.statisticsView;
   }
-
 
   void _incrementTab(index) {
     setState(() {
@@ -36,29 +29,28 @@ class _MainPresenterView extends State<MainPresenterView> {
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
-
-      body: tabs[_cIndex],
-        bottomNavigationBar:BottomNavigationBar(
+        body: tabs[_cIndex],
+        bottomNavigationBar: BottomNavigationBar(
           currentIndex: _cIndex,
           fixedColor: Colors.black87,
           unselectedItemColor: Colors.grey,
-          type: BottomNavigationBarType.fixed ,
+          type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.collections_bookmark),
-                title: new Text('Расписание')
-            ),
+                icon: Icon(
+                  Icons.collections_bookmark,
+                  color: _mainPresenter.mainPresenterModel.themeColorEnd,
+                ),
+                title: new Text((_mainPresenter.catalogPresenter.state == 'Student')? 'Расписание' : 'Группы')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.timeline),
-                title: new Text('Статистика')
-            ),
+                icon: Icon(Icons.timeline,
+                    color: _mainPresenter.mainPresenterModel.themeColorEnd),
+                title: new Text('Статистика')),
           ],
-          onTap: (index){
+          onTap: (index) {
             _incrementTab(index);
           },
-        )
-    );
+        ));
   }
 }

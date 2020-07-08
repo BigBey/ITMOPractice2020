@@ -61,12 +61,27 @@ class _GroupCreatorViewState extends State<GroupCreatorView> {
                 children: <Widget>[
                   Expanded(
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
-                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              onPressed: () {
+                                _groupCreatorPresenter.goBack(context);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: _groupCreatorPresenter.mainPresenter
+                                    .mainPresenterModel.themeColorEnd,
+                              ),
+                              iconSize: 40.0,
+                            ),
+                          ),
+                          Container(
                             child: IconButton(
                               icon: Icon(EgeHelper.plus),
-                              color: Colors.indigo,
+                              color: _groupCreatorPresenter.mainPresenter
+                                  .mainPresenterModel.themeColorEnd,
+                              iconSize: 40.0,
                               onPressed: () {
                                 _showMyDialog();
                               },
@@ -74,17 +89,38 @@ class _GroupCreatorViewState extends State<GroupCreatorView> {
                           )
                         ],
                       ),
-                      flex: 1),
+                      flex: 2),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        "Список группы",
+                        style: TextStyle(
+                            color: _groupCreatorPresenter
+                                .mainPresenter.mainPresenterModel.themeColorEnd,
+                            fontSize: 20),
+                      ),
+                    ),
+                    flex: 1,
+                  ),
                   Expanded(
                       child: ListView.builder(
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (_, index) {
-                            return Card(
-                              child: Text(
-                                  "${snapshot.data.documents[index]["lastname"]} ${snapshot.data.documents[index]["name"]}"),
-                            );
+                            return Container(
+                                height: 50,
+                                width: 100,
+                                child: Card(
+                                    color: _groupCreatorPresenter.mainPresenter
+                                        .mainPresenterModel.themeColorEnd,
+                                    child: Center(
+                                      child: Text(
+                                        "${snapshot.data.documents[index]["lastname"]} ${snapshot.data.documents[index]["name"]}",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      ),
+                                    )));
                           }),
-                      flex: 9)
+                      flex: 10)
                 ],
               );
             }));
