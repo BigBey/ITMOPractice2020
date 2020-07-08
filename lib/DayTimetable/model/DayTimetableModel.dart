@@ -74,4 +74,31 @@ class DayTimetableModel {
       }
     });
   }
+
+  Future<void> incrementCountOfLessons(String lessonId) {
+    try {
+      return Firestore.instance
+          .collection('Lessons')
+          .document(lessonId).updateData({
+        "count": FieldValue.increment(1)
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> incrementCountOfVisits(String lessonId, String studentId) {
+    try {
+      return Firestore.instance
+          .collection('Visits')
+          .where("lesson_id", isEqualTo: lessonId).where("student_id", isEqualTo: studentId).getDocuments().then((value) {
+         value.documents[0].reference.updateData({
+           "visits_count": FieldValue.increment(1),
+           "last_visit": true
+         });
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

@@ -68,7 +68,10 @@ class _HomePageState extends State<HomePage> {
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image(image: AssetImage('assets/images/itmo_logo.png')),
+                Text(
+                  "Авторизация",
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                ),
                 FlatButton(
                   textColor: Colors.white,
                   onPressed: () {
@@ -161,9 +164,9 @@ class _HomePageState extends State<HomePage> {
                           _lastNameController.text, _nameController.text);
                     } catch (e) {
                       FlutterToast.showToast(
-                          msg: "Неверное имя или фамилия, попробуйте еще раз",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
+                        msg: "Неверное имя или фамилия, попробуйте еще раз",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
                       );
                       print(e.toString());
                     }

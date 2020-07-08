@@ -71,6 +71,7 @@ class _VisitsViewState extends State<VisitsView> {
                     .where("group_id",
                         isEqualTo: _visitsPresenter.mainPresenter
                             .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+                    .orderBy("lastname")
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {

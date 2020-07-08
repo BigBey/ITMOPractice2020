@@ -62,87 +62,279 @@ class DayTimetableViewState extends State<DayTimetableView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: StreamBuilder(
-            stream: Firestore.instance
-                .collection("Lessons")
-                .where("group_id",
-                    isEqualTo: _dayTimetablePresenter.mainPresenter
-                        .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
-                .where("day_of_week",
-                    isEqualTo:
-                        "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}")
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData)
-                return Center(
-                  child: Text("Loading..."),
-                );
-              return Column(
-                children: <Widget>[
-                  new Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-                          child: IconButton(
-                            onPressed: () {
-                              _dayTimetablePresenter.goBack(context);
-                            },
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: _dayTimetablePresenter.mainPresenter
-                                  .mainPresenterModel.themeColorEnd,
+    switch (_dayTimetablePresenter.mainPresenter.catalogPresenter.state) {
+      case "Teacher":
+        return Scaffold(
+            body: StreamBuilder(
+                stream: Firestore.instance
+                    .collection("Lessons")
+                    .where("group_id",
+                        isEqualTo: _dayTimetablePresenter.mainPresenter
+                            .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+                    .where("day_of_week",
+                        isEqualTo:
+                            "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}")
+                    .snapshots(),
+                builder: (context, snapshotOfLesson) {
+                  if (!snapshotOfLesson.hasData)
+                    return Center(
+                      child: Text("Loading..."),
+                    );
+                  return Column(
+                    children: <Widget>[
+                      new Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: IconButton(
+                                onPressed: () {
+                                  _dayTimetablePresenter.goBack(context);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: _dayTimetablePresenter.mainPresenter
+                                      .mainPresenterModel.themeColorEnd,
+                                ),
+                                iconSize: 40.0,
+                              ),
                             ),
-                            iconSize: 40.0,
-                          ),
+                            Container(
+                                alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  iconSize: 40.0,
+                                  icon: Icon(
+                                    EgeHelper.plus,
+                                    color: _dayTimetablePresenter.mainPresenter
+                                        .mainPresenterModel.themeColorEnd,
+                                  ),
+                                  onPressed: () {
+                                    _showMyDialog(
+                                        snapshotOfLesson.data.documents.length);
+                                  },
+                                ))
+                          ],
                         ),
-                        Container(
-                            alignment: Alignment.centerRight,
-                            child: IconButton(
-                              iconSize: 40.0,
-                              icon: Icon(
-                                EgeHelper.plus,
+                        flex: 2,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}",
+                            style: TextStyle(
                                 color: _dayTimetablePresenter.mainPresenter
                                     .mainPresenterModel.themeColorEnd,
-                              ),
-                              onPressed: () {
-                                _showMyDialog(snapshot.data.documents.length);
-                              },
-                            ))
-                      ],
-                    ),
-                    flex: 2,
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}",
-                        style: TextStyle(
-                            color: _dayTimetablePresenter
-                                .mainPresenter.mainPresenterModel.themeColorEnd,
-                            fontSize: 20),
+                                fontSize: 20),
+                          ),
+                        ),
+                        flex: 1,
                       ),
-                    ),
-                    flex: 1,
-                  ),
-                  new Expanded(
-                    child: ListView.builder(
-                        itemCount: snapshot.data.documents.length,
-                        itemBuilder: (_, index) {
-                          return GestureDetector(
-                              onTap: () {
-                                _dayTimetablePresenter.mainPresenter
-                                        .visitsPresenter.visitsModel.lessonId =
-                                    snapshot.data.documents[index].documentID;
-                                _dayTimetablePresenter.goToVisits(context);
-                              },
-                              child: Card(
+                      new Expanded(
+                        child: ListView.builder(
+                            itemCount: snapshotOfLesson.data.documents.length,
+                            itemBuilder: (_, index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    _dayTimetablePresenter
+                                            .mainPresenter
+                                            .visitsPresenter
+                                            .visitsModel
+                                            .lessonId =
+                                        snapshotOfLesson
+                                            .data.documents[index].documentID;
+                                    _dayTimetablePresenter.goToVisits(context);
+                                  },
+                                  child: Card(
+                                    color: Colors.white70,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          snapshotOfLesson.data.documents[index]
+                                              ["title"],
+                                          style: TextStyle(
+                                              color: _dayTimetablePresenter
+                                                  .mainPresenter
+                                                  .mainPresenterModel
+                                                  .themeColorEnd,
+                                              fontSize: 20),
+                                        ),
+                                        StreamBuilder(
+                                          stream: Firestore.instance
+                                              .collection("Teachers")
+                                              .document(snapshotOfLesson
+                                                      .data.documents[index]
+                                                  ["teacher_id"])
+                                              .snapshots(),
+                                          builder:
+                                              (context, snapshotOfTeacher) {
+                                            if (!snapshotOfTeacher.hasData) {
+                                              return new Text("Loading");
+                                            }
+                                            var teacherDocument =
+                                                snapshotOfTeacher.data;
+                                            return new Text(
+                                              "${teacherDocument["lastname"]} ${teacherDocument["name"]}",
+                                              style: TextStyle(
+                                                  color: _dayTimetablePresenter
+                                                      .mainPresenter
+                                                      .mainPresenterModel
+                                                      .themeColorEnd,
+                                                  fontSize: 20),
+                                            );
+                                          },
+                                        ),
+                                        Text(
+                                          snapshotOfLesson.data.documents[index]
+                                              ["textbook"],
+                                          style: TextStyle(
+                                              color: _dayTimetablePresenter
+                                                  .mainPresenter
+                                                  .mainPresenterModel
+                                                  .themeColorEnd,
+                                              fontSize: 20),
+                                        ),
+                                        new RichText(
+                                          text: new TextSpan(
+                                            children: [
+                                              new TextSpan(
+                                                text: 'Ссылка на учебник',
+                                                style: new TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 20),
+                                                recognizer:
+                                                    new TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        launch(snapshotOfLesson
+                                                                .data
+                                                                .documents[index]
+                                                            ["textbook_ref"]);
+                                                      },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Text(
+                                          snapshotOfLesson.data.documents[index]
+                                              ["theme"],
+                                          style: TextStyle(
+                                              color: _dayTimetablePresenter
+                                                  .mainPresenter
+                                                  .mainPresenterModel
+                                                  .themeColorEnd,
+                                              fontSize: 20),
+                                        ),
+                                        Text(
+                                          snapshotOfLesson.data.documents[index]
+                                              ["hometask"],
+                                          style: TextStyle(
+                                              color: _dayTimetablePresenter
+                                                  .mainPresenter
+                                                  .mainPresenterModel
+                                                  .themeColorEnd,
+                                              fontSize: 20),
+                                        ),
+                                        new RichText(
+                                          text: new TextSpan(
+                                            children: [
+                                              new TextSpan(
+                                                text: 'Ссылка на zoom',
+                                                style: new TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 20),
+                                                recognizer:
+                                                    new TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        _dayTimetablePresenter
+                                                            .dayTimetableModel
+                                                            .incrementCountOfLessons(
+                                                                snapshotOfLesson
+                                                                    .data
+                                                                    .documents[
+                                                                        index]
+                                                                    .documentID);
+                                                        launch(snapshotOfLesson
+                                                                .data
+                                                                .documents[index]
+                                                            ["zoom_link"]);
+                                                      },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                            }),
+                        flex: 9,
+                      )
+                    ],
+                  );
+                }));
+        break;
+      case "Student":
+        return Scaffold(
+            body: StreamBuilder(
+                stream: Firestore.instance
+                    .collection("Lessons")
+                    .where("group_id",
+                        isEqualTo: _dayTimetablePresenter.mainPresenter
+                            .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+                    .where("day_of_week",
+                        isEqualTo:
+                            "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}")
+                    .snapshots(),
+                builder: (context, snapshotOfLesson) {
+                  if (!snapshotOfLesson.hasData)
+                    return Center(
+                      child: Text("Loading..."),
+                    );
+                  return Column(
+                    children: <Widget>[
+                      new Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: IconButton(
+                                onPressed: () {
+                                  _dayTimetablePresenter.goBack(context);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: _dayTimetablePresenter.mainPresenter
+                                      .mainPresenterModel.themeColorEnd,
+                                ),
+                                iconSize: 40.0,
+                              ),
+                            ),
+                            Container()
+                          ],
+                        ),
+                        flex: 2,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            "${_dayTimetablePresenter.dayTimetableModel.dayOfTheWeek}",
+                            style: TextStyle(
+                                color: _dayTimetablePresenter.mainPresenter
+                                    .mainPresenterModel.themeColorEnd,
+                                fontSize: 20),
+                          ),
+                        ),
+                        flex: 1,
+                      ),
+                      new Expanded(
+                        child: ListView.builder(
+                            itemCount: snapshotOfLesson.data.documents.length,
+                            itemBuilder: (_, index) {
+                              return Card(
                                 color: Colors.white70,
                                 child: Column(
                                   children: <Widget>[
                                     Text(
-                                      snapshot.data.documents[index]["title"],
+                                      snapshotOfLesson.data.documents[index]
+                                          ["title"],
                                       style: TextStyle(
                                           color: _dayTimetablePresenter
                                               .mainPresenter
@@ -153,14 +345,15 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                     StreamBuilder(
                                       stream: Firestore.instance
                                           .collection("Teachers")
-                                          .document(snapshot.data
+                                          .document(snapshotOfLesson.data
                                               .documents[index]["teacher_id"])
                                           .snapshots(),
-                                      builder: (context, snapshot) {
-                                        if (!snapshot.hasData) {
+                                      builder: (context, snapshotOfTeacher) {
+                                        if (!snapshotOfTeacher.hasData) {
                                           return new Text("Loading");
                                         }
-                                        var teacherDocument = snapshot.data;
+                                        var teacherDocument =
+                                            snapshotOfTeacher.data;
                                         return new Text(
                                           "${teacherDocument["lastname"]} ${teacherDocument["name"]}",
                                           style: TextStyle(
@@ -173,7 +366,7 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                       },
                                     ),
                                     Text(
-                                      snapshot.data.documents[index]
+                                      snapshotOfLesson.data.documents[index]
                                           ["textbook"],
                                       style: TextStyle(
                                           color: _dayTimetablePresenter
@@ -191,17 +384,19 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                                 color: Colors.blue,
                                                 fontSize: 20),
                                             recognizer:
-                                            new TapGestureRecognizer()
-                                              ..onTap = () {
-                                                launch(snapshot.data.documents[index]
-                                                ["textbook_ref"]);
-                                              },
+                                                new TapGestureRecognizer()
+                                                  ..onTap = () {
+                                                    launch(snapshotOfLesson.data
+                                                            .documents[index]
+                                                        ["textbook_ref"]);
+                                                  },
                                           ),
                                         ],
                                       ),
                                     ),
                                     Text(
-                                      snapshot.data.documents[index]["theme"],
+                                      snapshotOfLesson.data.documents[index]
+                                          ["theme"],
                                       style: TextStyle(
                                           color: _dayTimetablePresenter
                                               .mainPresenter
@@ -210,7 +405,7 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                           fontSize: 20),
                                     ),
                                     Text(
-                                      snapshot.data.documents[index]
+                                      snapshotOfLesson.data.documents[index]
                                           ["hometask"],
                                       style: TextStyle(
                                           color: _dayTimetablePresenter
@@ -230,7 +425,19 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                             recognizer:
                                                 new TapGestureRecognizer()
                                                   ..onTap = () {
-                                                    launch(snapshot.data
+                                                    _dayTimetablePresenter
+                                                        .dayTimetableModel
+                                                        .incrementCountOfVisits(
+                                                            snapshotOfLesson
+                                                                .data
+                                                                .documents[
+                                                                    index]
+                                                                .documentID,
+                                                            _dayTimetablePresenter
+                                                                .mainPresenter
+                                                                .catalogPresenter
+                                                                .userId);
+                                                    launch(snapshotOfLesson.data
                                                             .documents[index]
                                                         ["zoom_link"]);
                                                   },
@@ -240,13 +447,15 @@ class DayTimetableViewState extends State<DayTimetableView> {
                                     ),
                                   ],
                                 ),
-                              ));
-                        }),
-                    flex: 9,
-                  )
-                ],
-              );
-            }));
+                              );
+                            }),
+                        flex: 9,
+                      )
+                    ],
+                  );
+                }));
+        break;
+    }
   }
 
   Future<void> _showMyDialog(int subjectLength) async {
@@ -346,5 +555,14 @@ class DayTimetableViewState extends State<DayTimetableView> {
         );
       },
     );
+  }
+
+  _launchURL() async {
+    const url = 'https://flutter.io';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

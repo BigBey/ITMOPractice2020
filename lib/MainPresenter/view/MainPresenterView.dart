@@ -29,28 +29,37 @@ class _MainPresenterView extends State<MainPresenterView> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        body: tabs[_cIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _cIndex,
-          fixedColor: Colors.black87,
-          unselectedItemColor: Colors.grey,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.collections_bookmark,
-                  color: _mainPresenter.mainPresenterModel.themeColorEnd,
-                ),
-                title: new Text((_mainPresenter.catalogPresenter.state == 'Student')? 'Расписание' : 'Группы')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.timeline,
-                    color: _mainPresenter.mainPresenterModel.themeColorEnd),
-                title: new Text('Статистика')),
-          ],
-          onTap: (index) {
-            _incrementTab(index);
-          },
-        ));
+    switch (_mainPresenter.catalogPresenter.state) {
+      case "Teacher":
+        return new Scaffold(
+            body: tabs[_cIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _cIndex,
+              fixedColor: Colors.black87,
+              unselectedItemColor: Colors.grey,
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.collections_bookmark,
+                      color: _mainPresenter.mainPresenterModel.themeColorEnd,
+                    ),
+                    title: new Text('Группы')),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.timeline,
+                        color: _mainPresenter.mainPresenterModel.themeColorEnd),
+                    title: new Text('Статистика')),
+              ],
+              onTap: (index) {
+                _incrementTab(index);
+              },
+            ));
+        break;
+      case "Student":
+        return new Scaffold(
+          body: tabs[_cIndex],
+        );
+        break;
+    }
   }
 }

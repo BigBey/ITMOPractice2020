@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/GroupCreator/entities/Student.dart';
 import 'package:flutterapp/GroupCreator/presenter/GroupCreatorPresenter.dart';
 import 'package:flutterapp/assets/ege_helper_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GroupCreatorView extends StatefulWidget {
   var _groupCreatorPresenter;
@@ -53,6 +54,7 @@ class _GroupCreatorViewState extends State<GroupCreatorView> {
                 .where("group_id",
                     isEqualTo: _groupCreatorPresenter.mainPresenter
                         .daysOfTheWeekPresenter.daysOfTheWeekModel.groupId)
+                .orderBy("lastname")
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
@@ -169,10 +171,15 @@ class _GroupCreatorViewState extends State<GroupCreatorView> {
             ),
             FlatButton(
               child: Text('Подтвердить'),
-              onPressed: () {
-                _groupCreatorPresenter.groupCreatorModel
-                    .addNewStudentToTheGroup(_lastNameController.text,
-                        _nameController.text, _emailController.text);
+              onPressed: () async {
+                FlutterToast.showToast(
+                  msg: await _groupCreatorPresenter.groupCreatorModel
+                      .addNewStudentToTheGroup(_lastNameController.text,
+                      _nameController.text, _emailController.text),
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                );
+                setState(() {});
                 Navigator.of(context).pop();
               },
             ),
