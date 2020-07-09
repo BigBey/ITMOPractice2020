@@ -136,10 +136,13 @@ class _StatisticsStudentViewState extends State<StatisticsStudentView> {
                                             builder:
                                                 (context, studentSnapshot) {
                                               if (!studentSnapshot.hasData) {
-                                                return Text("Loading");
+                                                return Text("Loading",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20));
                                               }
                                               return Text(
-                                                  "${(studentSnapshot.data / groupSnapshot.data * 100).toInt()} %",
+                                                  "${((groupSnapshot.data != 0) ? studentSnapshot.data / groupSnapshot.data * 100 : 0).toInt()} %",
                                                   style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 20));

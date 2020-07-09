@@ -807,7 +807,7 @@ class DayTimetableViewState extends State<DayTimetableView> {
                 Navigator.of(context).pop();
               },
             ),
-            
+
             FlatButton(
               child: Text('Подтвердить'),
               onPressed: () {

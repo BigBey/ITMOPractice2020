@@ -124,7 +124,10 @@ class _StatisticsViewState extends State<StatisticsView> {
                                             builder:
                                                 (context, studentsSnapshot) {
                                               if (!studentsSnapshot.hasData) {
-                                                return Text("Loading...");
+                                                return Text("Loading...",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20));
                                               }
                                               return FutureBuilder(
                                                 future: _statisticsPresenter

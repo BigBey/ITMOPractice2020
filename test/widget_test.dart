@@ -12,19 +12,39 @@ import 'package:flutterapp/MainScreen/view/MainScreenView.dart';
 import 'package:flutterapp/MainScreen/presenter/MainScreenPresenter.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Authorization', (WidgetTester tester) async {
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Timetable', (WidgetTester tester) async {
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  });
+
+  testWidgets('Adding new group', (WidgetTester tester) async {
+
+  });
+
+  testWidgets('Authorization', (WidgetTester tester) async {
+
+  });
+
+  testWidgets('Timetable', (WidgetTester tester) async {
+
+  });
+
+  testWidgets('Adding new group', (WidgetTester tester) async {
+
+  });
+
+  testWidgets('Authorization', (WidgetTester tester) async {
+
+  });
+
+  testWidgets('Timetable', (WidgetTester tester) async {
+
+  });
+
+  testWidgets('Adding new group', (WidgetTester tester) async {
+
   });
 }
