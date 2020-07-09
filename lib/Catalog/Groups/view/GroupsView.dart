@@ -42,7 +42,7 @@ class _GroupsViewState extends State<GroupsView>{
     return Container(
       padding: EdgeInsets.only(top: 5),
       child: StreamBuilder(
-        stream: Firestore.instance.collection("Groups").snapshots(),
+        stream: Firestore.instance.collection("Groups").orderBy("group_name").snapshots(),
         builder: (context, snapshot){
           if (!snapshot.hasData) return const Text('Loading...');
           return GridView.builder(

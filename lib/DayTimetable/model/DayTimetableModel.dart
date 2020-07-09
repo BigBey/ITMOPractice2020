@@ -25,20 +25,24 @@ class DayTimetableModel {
       String theme,
       String hometask,
       String zoomRef,
-      int index) async {
+      int index,
+      String startTime,
+      String endTime) async {
     var teacherId = "";
     DocumentReference ref = await Firestore.instance.collection("Lessons").add({
       "day_of_week": _dayOfTheWeek,
       "group_id": _dayTimetablePresenter
           .mainPresenter.daysOfTheWeekPresenter.daysOfTheWeekModel.groupId,
-      "title": title,
+      "title": (title != "")? "Предмет": title,
       "teacher_id": teacherId,
-      "textbook": textbook,
-      "textbook_ref": textbookRef,
-      "theme": theme,
-      "hometask": hometask,
-      "zoom_link": zoomRef,
-      "index": index
+      "textbook": (textbook != "")? "Учебник": textbook,
+      "textbook_ref": (textbookRef != "")? "Ссылка на учебник": textbookRef,
+      "theme": (theme != "")? "Тема занятия": theme,
+      "hometask": (hometask != "")? "Домашнее задание": hometask,
+      "zoom_link": (zoomRef != "")? "Ссылка на zoom": zoomRef,
+      "index": index,
+      "start_time": startTime,
+      "end_time": endTime
     });
     Firestore.instance
         .collection("Students")
@@ -96,6 +100,30 @@ class DayTimetableModel {
            "visits_count": FieldValue.increment(1),
            "last_visit": true
          });
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> incrementGroupCountOfVisits(String groupId) {
+    try {
+      return Firestore.instance
+          .collection('Groups')
+          .document(groupId).updateData({
+        "visits": FieldValue.increment(1)
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> incrementStudentCountOfVisits(String studentId) {
+    try {
+      return Firestore.instance
+          .collection('Students')
+          .document(studentId).updateData({
+        "visits": FieldValue.increment(1)
       });
     } catch (e) {
       print(e.toString());

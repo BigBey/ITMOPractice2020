@@ -181,10 +181,11 @@ class CatalogViewState extends State<CatalogView> {
     switch(_catalogPresenter.state){
       case "Teacher":
         return Scaffold(
-          body: Column(children: <Widget>[
-            new Expanded(child: createFirstElement(context), flex: 3),
-            new Expanded(child: createSecondElement(), flex: 4),
-            new Expanded(child: fragments[_fIndex], flex: 22)
+          body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
+            createFirstElement(context),
+            createSecondElement(),
+            Container(height: (_fIndex == 0)? 492 : 299,child:fragments[_fIndex])
           ]),
         );
         break;

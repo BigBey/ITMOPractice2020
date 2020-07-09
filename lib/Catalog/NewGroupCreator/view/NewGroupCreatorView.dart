@@ -3,20 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/NewGroupCreator/presenter/NewGroupCreatorPresenter.dart';
 
-class NewGroupCreatorView extends StatefulWidget{
+class NewGroupCreatorView extends StatefulWidget {
   var _tasksPresenter;
 
   NewGroupCreatorView(this._tasksPresenter);
 
   @override
-  State<StatefulWidget> createState() => _NewGroupCreatorViewState(_tasksPresenter);
+  State<StatefulWidget> createState() =>
+      _NewGroupCreatorViewState(_tasksPresenter);
 }
 
-class _NewGroupCreatorViewState extends State<NewGroupCreatorView>{
+class _NewGroupCreatorViewState extends State<NewGroupCreatorView> {
   var _tasksPresenter;
   TextEditingController _groupTitle;
 
-  _NewGroupCreatorViewState(NewGroupCreatorPresenter _tasksPresenter){
+  _NewGroupCreatorViewState(NewGroupCreatorPresenter _tasksPresenter) {
     this._tasksPresenter = _tasksPresenter;
   }
 
@@ -25,29 +26,30 @@ class _NewGroupCreatorViewState extends State<NewGroupCreatorView>{
     super.initState();
     _groupTitle = new TextEditingController();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      resizeToAvoidBottomPadding: true,
+      body: SingleChildScrollView(child:Column(
         children: <Widget>[
-          TextField(
+          Container(child:TextField(
             controller: _groupTitle,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Название группы',
             ),
-          ),
+          ), padding: EdgeInsets.only(top: 20),),
           FlatButton(
-            onPressed: (){
-              Firestore.instance.collection("Groups").add(
-                {"group_name" : "${_groupTitle.text}"}
-              );
+            onPressed: () {
+              Firestore.instance
+                  .collection("Groups")
+                  .add({"group_name": "${_groupTitle.text}", "visits": 0});
             },
             child: Text("Подтвердить"),
           )
-
         ],
-      ),
+      )),
     );
   }
 }

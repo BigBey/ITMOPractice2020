@@ -113,6 +113,10 @@ class _VisitsViewState extends State<VisitsView> {
                                                   _visitsPresenter
                                                       .visitsModel.lessonId,
                                                   value);
+                                          _visitsPresenter.visitsModel
+                                              .incrementStudentCountOfVisits(
+                                                  snapshot.data.documents[index]
+                                                      .documentID, value);
                                         });
                                       },
                                       activeColor: Colors.white,

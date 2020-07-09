@@ -21,15 +21,6 @@ class VisitsPresenter{
     _visitsModel = VisitsModel(this);
   }
 
-  void initStudents(){
-    _visitsModel.initStudents();
-  }
-
-  void checkVisits(){
-    //TODO
-    _visitsModel.checkVisits();
-  }
-
   void goBack(BuildContext context){
     Navigator.pop(context);
   }

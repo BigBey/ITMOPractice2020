@@ -48,6 +48,7 @@ class _GroupCreatorViewState extends State<GroupCreatorView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomPadding: true,
         body: StreamBuilder(
             stream: Firestore.instance
                 .collection("Students")
@@ -142,21 +143,21 @@ class _GroupCreatorViewState extends State<GroupCreatorView> {
                   controller: _lastNameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Фамилия',
+                    hintText: 'Фамилия*',
                   ),
                 ),
                 TextField(
                   controller: _nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Имя',
+                    hintText: 'Имя*',
                   ),
                 ),
                 TextField(
                   controller: _emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
+                    hintText: 'Email',
                   ),
                 ),
               ],

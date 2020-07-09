@@ -66,35 +66,47 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Container(
             child: new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Авторизация",
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                ),
-                FlatButton(
-                  textColor: Colors.white,
-                  onPressed: () {
-                    _mainScreenPresenter.setAppState(context, "Student");
-                    _showMyDialog();
-                  },
-                  child: Text(
-                    "Войти как студент",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22.0),
+                Expanded(
+                  child: Container(
+                    child: Text(
+                      "Авторизация",
+                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                    padding: EdgeInsets.only(top: 30),
                   ),
+                  flex: 6,
                 ),
-                FlatButton(
-                  textColor: Colors.white,
-                  onPressed: () {
-                    _mainScreenPresenter.setAppState(context, "Teacher");
-                    _showMyDialog();
-                  },
-                  child: Text(
-                    "Войти как преподаватель",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22.0),
+                Expanded(
+                  child: FlatButton(
+                    textColor: Colors.white,
+                    onPressed: () {
+                      _mainScreenPresenter.setAppState(context, "Student");
+                      _showMyDialog();
+                    },
+                    child: Text(
+                      "Войти как студент",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22.0),
+                    ),
                   ),
+                  flex: 1,
+                ),
+                Expanded(
+                  child: FlatButton(
+                    textColor: Colors.white,
+                    onPressed: () {
+                      _mainScreenPresenter.setAppState(context, "Teacher");
+                      _showMyDialog();
+                    },
+                    child: Text(
+                      "Войти как преподаватель",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22.0),
+                    ),
+                  ),
+                  flex: 1,
                 )
               ],
             ),
@@ -113,22 +125,26 @@ class _HomePageState extends State<HomePage> {
           title: Text(
               'Авторизация как ${(_mainScreenPresenter.mainPresenter.catalogPresenter.state == "Student") ? "студент" : "преподаватель"}'),
           content: SingleChildScrollView(
-            child: ListBody(
+            child: Column(
               children: <Widget>[
-                TextField(
-                  controller: _lastNameController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Фамилия',
-                  ),
-                ),
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Имя',
-                  ),
-                ),
+                Container(
+                    padding: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: _lastNameController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Фамилия',
+                      ),
+                    )),
+                Container(
+                    padding: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Имя',
+                      ),
+                    )),
               ],
             ),
           ),
@@ -173,8 +189,8 @@ class _HomePageState extends State<HomePage> {
                     break;
                 }
                 if (userId != null) {
-                  _lastNameController.clear();
-                  _nameController.clear();
+                  //_lastNameController.clear();
+                  //_nameController.clear();
                   _mainScreenPresenter.mainPresenter.catalogPresenter.userId =
                       userId;
                   _mainScreenPresenter.goToCatalog(context);

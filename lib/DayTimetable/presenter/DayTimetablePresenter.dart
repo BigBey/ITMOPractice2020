@@ -10,14 +10,12 @@ class DayTimetablePresenter{
   var _mainPresenter;
   var _groupId;
   var _dayOfTheWeek;
-  List<Subject> _subjects;
   var _dayTimetableView;
   var _dayTimetableModel;
 
   get mainPresenter => _mainPresenter;
   get dayOfTheWeek => _dayOfTheWeek;
   get groupId => _groupId;
-  get subjects => _subjects;
   get dayTimetableView => _dayTimetableView;
   get dayTimetableModel => _dayTimetableModel;
 
@@ -33,11 +31,6 @@ class DayTimetablePresenter{
     _mainPresenter = mainPresenter;
     _dayTimetableView = DayTimetableView(this);
     _dayTimetableModel = DayTimetableModel(this);
-  }
-
-  void addNewSubjectToDB(){
-    //TODO
-    _dayTimetableModel.addNewSubjectToDB();
   }
 
   void goToVisits(BuildContext context){

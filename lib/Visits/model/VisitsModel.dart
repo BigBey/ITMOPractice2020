@@ -48,4 +48,16 @@ class VisitsModel {
       print(e.toString());
     }
   }
+
+  Future<void> incrementStudentCountOfVisits(String studentId, bool visit) {
+    try {
+      return Firestore.instance
+          .collection('Students')
+          .document(studentId).updateData({
+        "visits": FieldValue.increment(visit? 1 : -1)
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

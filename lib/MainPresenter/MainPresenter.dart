@@ -7,7 +7,7 @@ import 'package:flutterapp/MainPresenter/view/MainPresenterView.dart';
 import 'package:flutterapp/MainScreen/presenter/MainScreenPresenter.dart';
 import 'package:flutterapp/Signature/presenter/SignaturePresenter.dart';
 import 'package:flutterapp/Statistics/presenter/StatisticsPresenter.dart';
-import 'package:flutterapp/Statistics/view/StatisticsView.dart';
+import 'package:flutterapp/StatisticsStudent/presenter/StatisticsStudentPresenter.dart';
 import 'package:flutterapp/Test/presenter/TestPresenter.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
 import 'package:flutterapp/Visits/presenter/VisitsPresenter.dart';
@@ -28,6 +28,7 @@ class MainPresenter{
   var _dayTimetablePresenter;
   var _visitsPresenter;
   var _groupCreatorPresenter;
+  var _statisticsStudentPresenter;
 
   var _mainPresenterView;
   var _mainPresenterModel;
@@ -45,6 +46,7 @@ class MainPresenter{
   get dayTimetablePresenter => _dayTimetablePresenter;
   get visitsPresenter => _visitsPresenter;
   get groupCreatorPresenter => _groupCreatorPresenter;
+  get statisticsStudentPresenter => _statisticsStudentPresenter;
 
   MainPresenter(){
     _mainPresenterModel = MainPresenterModel(this);
@@ -60,6 +62,7 @@ class MainPresenter{
     _dayTimetablePresenter = DayTimetablePresenter(this);
     _visitsPresenter = VisitsPresenter(this);
     _groupCreatorPresenter = GroupCreatorPresenter(this);
+    _statisticsStudentPresenter = StatisticsStudentPresenter(this);
   }
 
 

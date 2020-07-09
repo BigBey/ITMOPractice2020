@@ -36,7 +36,8 @@ class GroupCreatorModel {
             "group_id": _groupCreatorPresenter
                 .mainPresenter.daysOfTheWeekPresenter.daysOfTheWeekModel.groupId,
             "lastname": lastname,
-            "name": name
+            "name": name,
+            "visits": 0
           }).then((valueOfStudent) {
             Firestore.instance
                 .collection("Lessons")
