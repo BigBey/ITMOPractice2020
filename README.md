@@ -13,4 +13,4 @@
     https://www.turbopro.ru/index.php/programmirovanie-pod-os-android/7330-android-studio-sozdanie-virtualnogo-ustrojstva-avd
     
 Демо-видео работы приложения:
-  https://img.youtu.be/oZ95fQT-91Q
+  https://youtu.be/oZ95fQT-91Q
